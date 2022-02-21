@@ -1,0 +1,32 @@
+{%extends "navbar.html"%}
+{%block content%}
+{% if projs %}
+<div class="container ">
+    <h3 > Category : {{c}} </h3>
+  <div class="row">
+    {% for p in projs %}
+    <div class="col-4">
+      <div className=" card h-100 border">
+        <a href ="{%url  'project'  p.id %}" >  
+        <img className="card-img-top" src="/media/{{pics|get_item:p.id}}" height="250"/> </a>
+        <div className="card-body">
+          <div class="card-text text-center">
+          <p >{{p.title}} </p>
+          <p  > Target: {{p.total_target}} L.E </p>
+          <p  > Raised: {{p.raised}} L.E    </p>
+          <p  > End-date: {{p.end_date}}  </p>
+        </div>
+      
+        </div>
+  
+    </div>
+  
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+  
+
+{% endif%}
+
+{%endblock%}

@@ -1,0 +1,29 @@
+{%extends "navbar.html"%}
+{%block content%}
+
+<h4 class="text-center text-danger" > My Donations </h4>
+<table class='table container my-4 mx-5'  >
+    <thead>
+    <tr>
+        <th> Donation ID</th>
+        <th> Project  </th>
+        <th> Category </th>
+        <th> Amount </th>
+        <th>  Date </th>
+    </tr>
+    </thead>
+   <tbody>
+       {% for d in dons %}
+       <tr>
+           <td> {{d.id}}  </td>
+           <td> {{d.project }} </td>
+           <td> {{d.project.category }} </td>
+           <td> {{d.donation}}  </td>
+           <td> {{d.created_at}} </td>
+       </tr>
+       {%endfor%}
+   </tbody>
+   </table>
+
+
+{%endblock%}

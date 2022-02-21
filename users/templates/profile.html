@@ -1,0 +1,52 @@
+{% extends 'navbar.html'%}
+
+{% block content %}
+<div class="container">
+    <div class="card text-center" style="margin-top: 50px;">
+        <div class="card-header">
+            welcome, {{request.user.first_name}} {{request.user.last_name}}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">First Name : {{request.user.first_name}}</li>
+                <li class="list-group-item">Last Name : {{request.user.last_name}}</li>
+                <li class="list-group-item">Email : {{request.user.email}}</li>
+                <li class="list-group-item">Phone: {{request.user.phone}}</li>
+                <li class="list-group-item">Date Of Birth: {{request.user.date_birth}}</li>
+                <li class="list-group-item">FaceBook Link: {{request.user.facebook_link}}</li>
+                <li class="list-group-item">Country: {{request.user.country}}</li>
+                <li class="list-group-item">Photo: <img src="{{request.user.photo.url}}" alt="" width="50px"
+                        height="50px" /> </li>
+            </ul>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="{%  url 'update_prof' %}" class="btn btn-info">Update Account</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#example3">
+                Delete Account
+              </button>
+           
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="example3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Confirmation Message  </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Do you sure you want yo delete your account ? 
+        </div>
+        <div class="modal-footer">
+          <a type="button" href="{%  url 'del_prof' %}"  class="btn btn-danger" > Delete </a>
+          <a type="button" href="{%  url 'profile' %}"  class="btn btn-secondary"> Cancel </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+

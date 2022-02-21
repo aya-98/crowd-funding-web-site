@@ -1,0 +1,43 @@
+{%extends 'navbar.html' %}
+
+{%block content%}
+<h4 class="text-center text-danger" > my Campaigns </h4>
+<table class='table container my-4 mx-5'  >
+    <thead>
+    <tr>
+        <th> Project ID</th>
+        <th> Project title </th>
+        <th> Category </th>
+        <th> Raised </th>
+        <th>  Target </th>
+        <th> End Date </th>
+        <th > Actions </th>   
+</tr>
+<tbody>
+    {% for project in user_projects %}
+    <tr>
+        <td >{{project.id}}</td>
+        <td >{{project.title}}</td>
+        <td >{{project.category}}</td>
+        <td >{{donations|get_item:project.id}}</td>
+        <td >{{project.total_target}}</td>
+        <td >{{project.end_date}}</td>
+        <td> 
+
+            <a href="showproject/{{project.id}}" class="btn btn-info" >View</a>
+
+            {% if donations_flag|get_item:project.id %}
+
+            <a href="{%url 'cancelproj'   project.id %}" class="btn btn-danger ml-3" > Cancel </a>
+            
+            {% endif %}
+
+
+        </td>
+    </tr>
+    {%endfor%}
+</tbody>
+
+
+{%endblock%}
+

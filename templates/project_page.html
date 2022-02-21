@@ -1,0 +1,306 @@
+{%extends "navbar.html"%}
+{%block content%}
+<div id="carouselExampleInt" class="carousel slide mt-0" data-ride="carousel">
+    <div class="carousel-inner">
+      {% for pic in pics %}
+      {% if pic == pics.0 %}
+      <div class="carousel-item active" data-bs-interval="1500">
+        <img src="/media/{{pic.pic}}"  class=" slid">
+      </div>
+      {% else %}
+      <div class="carousel-item" data-bs-interval="1500">
+        <img src="/media/{{pic.pic}}"  class=" slid">
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInt" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInt" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+<br>
+<div class="container">
+    
+    <div class="row">
+        <div class="col-4 offset-3">
+            <h4  > Title : {{ project.title }} </h4>
+            <p>
+                Description : {{project.details}}
+              </p>
+            <p >Owner : {{ project.user.first_name}} {{project.user.last_name}}</p>
+            <p >Category : {{ project.category }}</p>
+            <p >Target : {{ project.total_target }} L.E</p>
+            <p >Total Raised : {{ donations }} L.E</p>
+            <p >End Date : {{ project.end_date }}</p>
+            <p >Rating :  {{ project.rating }}/10 </p>
+
+        </div>
+        <div class="col-3 offset-1"> 
+          <ul class="list-group list-group-flush">
+
+            <li class="list-group-item"><h4> project tags  </h4>  </li>
+           
+           {% for t in tags %}
+
+           <li class="list-group-item">{{ t.tag  }}</li>
+           {%endfor%}
+
+
+          </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-2 offset-3" >
+      <button type="button" class="btn btn-info text-center" data-bs-toggle="modal" data-bs-target="#rate">
+        Rate the project
+      </button>
+
+    </div>
+    <div class="col-2 " >
+      <button type="button" class="btn btn-info text-center" data-bs-toggle="modal" data-bs-target="#dont">
+        Donate for project 
+      </button>
+      
+    </div>
+
+    <div class="col-2 " >
+      <button type="button" class="btn btn-info text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Report the Project
+      </button>
+      
+    </div>
+
+    <div class="col-2">
+      <button type="button" class="btn btn-info text-center" data-bs-toggle="modal" data-bs-target="#commt">
+        Add comment
+      </button>
+      </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="rate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Rate the Project </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+<form method="post" action="/rate/{{project.id}}" >
+    {% csrf_token %}
+     
+    <label for="customRange3" class="form-label"> Rate the Project </label>
+    <div class="my-3 mx-5">
+<input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" name="r" value="{{user_rate}}"> 
+   
+</div>
+<div class="d-flex justify-content-center">
+    <input type="submit" value="Submit" class="btn btn-info"> </div>
+</form>
+
+</div>
+        
+</div>
+</div>
+</div>
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="dont" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Donate for Project </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form method="post" action="/donate/{{project.id}}" >
+                {% csrf_token %}
+
+                <input type="number" name="don" placeholder="Enter your donations" > 
+            
+                <input type="submit" value="Donate" class="btn btn-info">
+            </form>
+
+        
+        </div>
+        
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Report Project </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form method="post" action="/report_proj/{{project.id}}" >
+                {% csrf_token %}
+            
+                <textarea name="report1" > 
+
+                </textarea>
+                
+            
+                <input type="submit" value="Send" class="'btn btn-info">
+            </form>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="commt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Add comment </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <form method="post" action="/comment/{{project.id}}" >
+                {% csrf_token %}
+            
+               <textarea name="commt"  placeholder="Enter your comment "> 
+
+               </textarea>
+                
+            
+                <input type="submit" value="Add" class="'btn btn-info">
+            </form>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <div class='container border my-5' >
+  <h4 class="text-center">  Comments </h4>
+  {%for comment in comments %}
+  <div class="card mb-4">
+    <div class="card-header h4">
+      <img src="{{comment.user.photo.url}}" alt="" width="50px" height="50px" style="border-radius: 50%;">
+      <span> {{comment.user.first_name}} {{comment.user.last_name}}</span>
+    </div>
+    <div class="card-body h5">
+      {{comment}}
+    </div>
+    <!-- <div class="card-footer">
+
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal{{forloop.counter}}">
+            Report Comment
+          </button>
+          
+      
+    </div> -->
+
+  </div>
+
+{%endfor%}
+</div>
+
+{% if pro %}
+<div class="container my-5 ">
+    <h3 > Related Projects </h3>
+  <div class="row">
+    {% for p in pro %}
+    <div class="col-4 mb-3">
+      <div className=" card h-100 border">
+        <a href ="{%url  'project'  p.id %}" >  
+        <img className="card-img-top" src="/media/{{pho|get_item:p.id}}" height="250"/> </a>
+        <div className="card-body">
+          <div class="card-text text-center"> 
+          <p >{{p.title}} </p>
+          <p  > Target: {{p.total_target}} L.E </p>
+          <p  > Raised: {{p.raised}} L.E    </p>
+          <p  > End-date: {{p.end_date}}  </p>
+        </div>
+      
+        </div>
+  
+    </div>
+  
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+  
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  .slid{
+    width: 100%;
+    height: 250px;
+
+  }
+</style>
+
+
+
+
+{%endblock%}
